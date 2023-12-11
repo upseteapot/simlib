@@ -11,7 +11,7 @@ int main(int argc, char **argv)
     int world_height = 720;
 
     SimulationState simulation_state;
-    CreateSimulationState(&simulation_state, BOTH, 1920, 1080, 10);
+    CreateSimulationState(&simulation_state, BOTH, 1920, 1080, 60, 10);
     // ParseSimulationState(&simulation_state, argc, argv);
     InitSimulation(&simulation_state, (Vector2){world_width, world_height}, "Simlib");
 
