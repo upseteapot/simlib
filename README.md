@@ -32,14 +32,14 @@ int main(int argc, char **argv)
 ```
 ## Usage
 ```c
-void CreateSimulationState(SimulationState *sim_state, enum Mode mode, int target_resolution_width, int target_resolution_height, int fps, int duration);
-void ParseSimulationState(SimulationState *sim_state, int argc, char **argv);
-void InitSimulation(SimulationState *sim_state, Vector2 start_view, const char *title);
-void BeginSimulationMode(SimulationState *sim_state, Color clear_color);
-int  EndSimulationMode(SimulationState *sim_state);
+void CreateSimulationState(SimulationState *state, int width, int height, int fps, int duration);
+void ParseSimulationState(SimulationState *state, int argc, char **argv);
+void InitSimulation(SimulationState *state, Vector2 start_view, const char *title);
+void BeginSimulationMode(SimulationState *state, Color clear_color);
+int  EndSimulationMode(SimulationState *state);
 void CloseSimulation(SimulationState *sim_state);
 ```
 ## Parser
-```bash
+```
 ./main [MODE] [WIDTH] [HEIGHT] [FPS] [DURATION (only in render mode)]
 ```
