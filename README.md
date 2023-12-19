@@ -6,7 +6,7 @@
 ## Example
 ```c
 int main(int argc, char **argv)
-{   
+{
     int world_width  = 1280;
     int world_height = 720;
 
@@ -17,15 +17,15 @@ int main(int argc, char **argv)
 
     while (!WindowShouldClose())
     {
-        BeginSimulationMode(&simulation_state);
-        
+        BeginSimulationMode(&simulation_state, BLACK);
+
         // Update and render simulation with raylib.
-        
+
         if(!EndSimulationMode(&simulation_state))
             break;
     }
 
-    CloseSimulation(simulation_state);
+    CloseSimulation(&simulation_state);
     
     return 0;
 }

@@ -96,6 +96,9 @@ void CreateSimulationState(SimulationState *sim_state, enum Mode mode, int targe
     sim_state->fps = fps;
     sim_state->dt = 1.0f / (float)fps;
     sim_state->duration = duration;
+    sim_state->loading_bar_size = (Vector2){ 300.0f, 50.0f };
+    sim_state->loading_bar_offset = 10.0f;
+    sim_state->percentage_font_size = 50.0f;
 }
 
 void ParseSimulationState(SimulationState *sim_state, int argc, char **argv)
@@ -171,7 +174,7 @@ void InitSimulation(SimulationState *sim_state, Vector2 start_view, const char *
     sim_state->origin      = (Vector2){ 0.0f, 0.0f };
     sim_state->source      = (Rectangle){ 0.0f, 0.0f, sim_state->target_resolution_width, -sim_state->target_resolution_height };
     sim_state->destination = (Rectangle){ 0.0f, 0.0f, sim_state->monitor_width, sim_state->monitor_height }; 
-    
+        
     sim_state->ffmpeg = NULL;
     if (sim_state->mode != RUN)
     {
@@ -179,6 +182,11 @@ void InitSimulation(SimulationState *sim_state, Vector2 start_view, const char *
         SetTraceLogLevel(LOG_NONE);
     } 
     
+    sim_state->gui_camera.offset   = (Vector2){ sim_state->monitor_width / 2.0f, sim_state->monitor_height / 2.0f };  
+    sim_state->gui_camera.target   = (Vector2){ 0.0f, 0.0f };
+    sim_state->gui_camera.rotation = 0.0f;
+    sim_state->gui_camera.zoom     = 1.0f;
+
     sim_state->camera.offset   = (Vector2){ sim_state->target_resolution_width / 2.0f, sim_state->target_resolution_height / 2.0f };
     sim_state->camera.target   = (Vector2){ 0.0f, 0.0f };
     sim_state->camera.rotation = 0.0f;
@@ -203,6 +211,30 @@ int EndSimulationMode(SimulationState *sim_state)
     
     if (sim_state->mode != RENDER)
         DrawTexturePro(sim_state->target.texture, sim_state->source, sim_state->destination, sim_state->origin, 0.0f, WHITE);
+    else 
+    {
+        char percentage[6];
+        sprintf(percentage, "%.1f%", 100.0f * sim_state->counter / sim_state->duration);
+
+        ClearBackground(BLACK);
+        BeginMode2D(sim_state->gui_camera);
+        DrawText(percentage, -(MeasureText(percentage, sim_state->percentage_font_size) / 2.0f), -100.0f, sim_state->percentage_font_size, WHITE);
+
+        DrawRectangle(
+                -sim_state->loading_bar_size.x / 2.0f, 
+                -sim_state->loading_bar_size.y / 2.0f, 
+                sim_state->loading_bar_size.x * (sim_state->counter / sim_state->duration), 
+                sim_state->loading_bar_size.y, 
+                GREEN); 
+        
+        DrawRectangleLines(
+                -(sim_state->loading_bar_size.x + sim_state->loading_bar_offset) / 2.0f, 
+                -(sim_state->loading_bar_size.y + sim_state->loading_bar_offset) / 2.0f, 
+                sim_state->loading_bar_size.x + sim_state->loading_bar_offset, 
+                sim_state->loading_bar_size.y + sim_state->loading_bar_offset, 
+                WHITE);
+        EndMode2D(); 
+    }
 
     if (sim_state->mode != RUN)
     {

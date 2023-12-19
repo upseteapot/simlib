@@ -46,6 +46,7 @@ typedef struct
     float duration;
     float counter;
     float dt;
+    Camera2D gui_camera;
     Camera2D camera;
     RenderTexture2D target;
     Image image;
@@ -53,6 +54,9 @@ typedef struct
     Rectangle source;
     Rectangle destination;
     FFMPEG *ffmpeg;
+    Vector2 loading_bar_size;
+    float loading_bar_offset;
+    float percentage_font_size;
 } SimulationState;
 
 
