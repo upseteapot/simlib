@@ -19,9 +19,9 @@ int main(int argc, char **argv)
     {
         BeginSimulationMode(&simulation_state, BLACK);
 
-        // Update and render simulation with raylib.
+        // Update and render your simulation with raylib.
 
-        if(!EndSimulationMode(&simulation_state))
+        if (!EndSimulationMode(&simulation_state))
             break;
     }
 
@@ -30,16 +30,8 @@ int main(int argc, char **argv)
     return 0;
 }
 ```
-## Usage
-```c
-void CreateSimulationState(SimulationState *state, int width, int height, int fps, int duration);
-void ParseSimulationState(SimulationState *state, int argc, char **argv);
-void InitSimulation(SimulationState *state, Vector2 start_view, const char *title);
-void BeginSimulationMode(SimulationState *state, Color clear_color);
-int  EndSimulationMode(SimulationState *state);
-void CloseSimulation(SimulationState *sim_state);
-```
 ## Parser
+Simlib comes with a parser so that you can change the parameters of the simulation at runtime.
 ```
 ./main [MODE] [WIDTH] [HEIGHT] [FPS] [DURATION (only in render mode)]
 ```

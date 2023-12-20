@@ -214,7 +214,7 @@ int EndSimulationMode(SimulationState *sim_state)
     else 
     {
         char percentage[6];
-        sprintf(percentage, "%.1f%", 100.0f * sim_state->counter / sim_state->duration);
+        sprintf(percentage, "%.1f%%", 100.0f * sim_state->counter / sim_state->duration);
 
         ClearBackground(BLACK);
         BeginMode2D(sim_state->gui_camera);
