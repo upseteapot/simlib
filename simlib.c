@@ -157,6 +157,9 @@ void ParseSimulationState(SimulationState *sim_state, int argc, char **argv)
     
     sim_state->counter = 0.0f;  
     sim_state->dt = 1.0f / (float)sim_state->fps;
+    sim_state->loading_bar_size = (Vector2){ 300.0f, 50.0f };
+    sim_state->loading_bar_offset = 10.0f;
+    sim_state->percentage_font_size = 50.0f;
 }
 
 void InitSimulation(SimulationState *sim_state, Vector2 start_view, const char *title)
